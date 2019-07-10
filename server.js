@@ -38,7 +38,6 @@ app.post('/register',function(req,res){
     console.log("POST DATA", req.body);
 
     if(emailRegex().test(req.body.email)!=true){
-        console.log(checkunique(req.body.email));
         req.flash('register', "email is not valid.");
     //other validations here, including bcrypt for password
     }
@@ -52,7 +51,9 @@ app.post('/register',function(req,res){
             console.log('email available');
         }
         else{
-            console.log('email unavailable')
+            console.log("email unavailable")
+            req.flash('register','email unavailable.');
+            // res.redirect('/')
         }
     })
     if(req.body.pw.length < 5 || req.body.pw!= req.body.pwConfirm){
