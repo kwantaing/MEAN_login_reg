@@ -42,6 +42,19 @@ app.post('/register',function(req,res){
         req.flash('register', "email is not valid.");
     //other validations here, including bcrypt for password
     }
+    User.find({email:req.body.email},function(err,user){
+        if(err){
+            console.log('email not available');
+            res.redirect('/')
+        }
+        else if(user.length == 0){
+            console.log(user);
+            console.log('email available');
+        }
+        else{
+            console.log('email unavailable')
+        }
+    })
     if(req.body.pw.length < 5 || req.body.pw!= req.body.pwConfirm){
         req.flash('register','passwords do not match.');
         res.redirect('/')
@@ -152,16 +165,3 @@ app.get('/', function(req, res) {
 app.listen(8000, function() {
     console.log("listening on port 8000");
 })
-
-
-function checkunique(email){
-    User.find({email:email},function(err,user){
-        if(err){
-            console.log('something went wrong');
-        }
-        else{
-            console.log(user)
-            res.redirect('/')
-        }
-    })
-}
