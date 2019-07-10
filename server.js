@@ -122,7 +122,6 @@ app.post('/login',function(req,res){
                 bcrypt.compare(req.body.pw, user.password, function(err,validpw){
                     if(err){
                         console.log("error");
-                        req.flash('login', "incorrect password");
                         res.redirect('/');                        
                     }else if(validpw==false){
                         console.log("incorrect password");
